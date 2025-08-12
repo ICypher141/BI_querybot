@@ -1,0 +1,1 @@
+The main idea behind this project is to create a local bot that can take json or csv, and possibly pdf inputs in later development stages. The bot will then output DAX queries or chart specs that can yield sensible PowerBI dashboards and visuals
