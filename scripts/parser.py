@@ -1,14 +1,11 @@
-import pandas as pd
-import json
-import os
+from pydantic import BaseModel, Field
+from langchain.output_parsers import PydanticOutputParser
 
-def load_data(file_path):
-    ext = os.path.splitext(file_path)[1].lower()
-    if ext == ".csv":
-        return pd.read_csv(file_path)
-    elif ext == ".json":
-        with open(file_path, 'r') as f:
-            data = json.load(f)
-        return pd.DataFrame(data)
-    else:
-        raise ValueError(f"Unsupported file format: {ext}")
+class PowerBIOutput(BaseModel):
+    dax_query: str = Field(description="DAX query for Power BI")
+    chart_spec: dict = Field(description="Chart specification in JSON format")
+    m_language: str = Field(description="M language code for Power BI transformation")
+
+def get_powerbi_parser():
+    """Return a LangChain PydanticOutputParser for PowerBIOutput."""
+    return PydanticOutputParser(pydantic_object=PowerBIOutput)
